@@ -1,0 +1,904 @@
+/* Page Container */
+.pageContainer {
+  position: relative;
+  z-index: 10;
+  min-height: calc(100vh - 120px);
+  padding: 120px 48px 80px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Page Header */
+.pageHeader {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.pageBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background-color: rgba(255, 69, 0, 0.08);
+  border: 1px solid rgba(255, 69, 0, 0.2);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cari-orange);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 
+    inset 0 0 20px rgba(255, 69, 0, 0.08),
+    0 0 30px rgba(255, 69, 0, 0.1);
+  text-shadow: 0 0 12px rgba(255, 69, 0, 0.3);
+}
+
+.pageTitle {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  letter-spacing: -2px;
+  font-family: var(--font-outfit), sans-serif;
+}
+
+.pageTitle .highlight {
+  color: var(--cari-orange);
+  font-style: italic;
+  text-shadow: 0 0 50px rgba(255, 69, 0, 0.35);
+}
+
+.pageSubtitle {
+  font-size: 18px;
+  color: #71717A;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ================================
+   BILLING TOGGLE (Headlight Switch)
+=============================== */
+.billingToggleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 64px;
+}
+
+.billingLabel {
+  font-size: 15px;
+  font-weight: 500;
+  color: #52525B;
+  transition: color 0.3s;
+}
+
+.billingLabel.active {
+  color: #FFFFFF;
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 64px;
+  height: 32px;
+  background: linear-gradient(180deg, #1A1A1A 0%, #0A0A0A 100%);
+  border: 2px solid #27272A;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.toggleSwitch:hover {
+  border-color: #3F3F46;
+}
+
+.toggleSwitch.active {
+  border-color: #FF4500;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 69, 0, 0.3);
+}
+
+.toggleSwitch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: 
+    radial-gradient(circle at 50% 50%, transparent 6px, rgba(255,255,255,0.1) 6px, rgba(255,255,255,0.1) 7px, transparent 7px),
+    conic-gradient(from 0deg, #3F3F46 0deg, #52525B 45deg, #3F3F46 90deg, #52525B 135deg, #3F3F46 180deg, #52525B 225deg, #3F3F46 270deg, #52525B 315deg, #3F3F46 360deg);
+  border-radius: 50%;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: rotate(0deg);
+}
+
+.toggleSwitch.active::after {
+  left: 35px;
+  background: 
+    radial-gradient(circle at 50% 50%, transparent 6px, rgba(255,255,255,0.2) 6px, rgba(255,255,255,0.2) 7px, transparent 7px),
+    conic-gradient(from 0deg, #FF4500 0deg, #FF6B35 45deg, #FF4500 90deg, #FF6B35 135deg, #FF4500 180deg, #FF6B35 225deg, #FF4500 270deg, #FF6B35 315deg, #FF4500 360deg);
+  box-shadow: 
+    0 0 16px rgba(255, 69, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: rotate(360deg);
+}
+
+.saveBadge {
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(255, 69, 0, 0.2) 0%, rgba(255, 69, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FF4500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+
+@keyframes pulseBadge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ================================
+   NITRO BOOST (Credits Section)
+=============================== */
+.nitroSection {
+  margin-bottom: 80px;
+  padding: 32px;
+  background: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30L30 0z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, #0A0A0A 0%, #111111 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.nitroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.nitroHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.nitroTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nitroTitle h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: var(--font-outfit), sans-serif;
+}
+
+.nitroIcon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #FF4500 0%, #CC3700 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nitroIcon svg {
+  width: 22px;
+  height: 22px;
+  color: #FFFFFF;
+}
+
+.nitroSubtitle {
+  font-size: 14px;
+  color: #71717A;
+}
+
+.nitroGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.nitroCard {
+  padding: 22px;
+  background: rgba(15, 15, 18, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  text-align: center;
+  transition: all 0.5s var(--ease-breath);
+  cursor: pointer;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.nitroCard:hover {
+  border-color: rgba(255, 69, 0, 0.2);
+  background: rgba(18, 18, 22, 0.8);
+  transform: translateY(-4px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 40px rgba(255, 69, 0, 0.04),
+    0 0 40px rgba(255, 69, 0, 0.1);
+}
+
+.nitroAmount {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.nitroLabel {
+  font-size: 12px;
+  color: #71717A;
+  margin-bottom: 12px;
+}
+
+.nitroPrice {
+  font-size: 18px;
+  font-weight: 700;
+  color: #A1A1AA;
+}
+
+.nitroBtn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nitroBtn:hover {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+/* ================================
+   GARAGE LEVEL (Pricing Cards)
+=============================== */
+.garageSection {
+  margin-bottom: 80px;
+}
+
+.sectionLabel {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sectionLabel span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #52525B;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Base Card */
+.pricingCard {
+  background: #0F0F0F;
+  border: 1px solid #1F1F1F;
+  border-radius: 28px;
+  padding: 36px;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.pricingCard:hover {
+  transform: translateY(-8px);
+}
+
+/* Free Plan - Stock Car */
+.pricingCard.stock {
+  background: linear-gradient(180deg, #111111 0%, #0A0A0A 100%);
+}
+
+.pricingCard.stock:hover {
+  border-color: #2F2F2F;
+}
+
+/* Pro Plan - GT3 RS Hero - Maximum Energy */
+.pricingCard.hero {
+  background: 
+    radial-gradient(ellipse 100% 60% at 50% 0%, rgba(255, 69, 0, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(255, 69, 0, 0.06) 0%, rgba(255, 69, 0, 0.02) 40%, #0A0A0A 100%);
+  border: 2px solid var(--cari-orange);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 80px rgba(255, 69, 0, 0.06),
+    0 0 80px rgba(255, 69, 0, 0.25),
+    0 25px 70px rgba(0, 0, 0, 0.55);
+  z-index: 10;
+  margin-top: -16px;
+  margin-bottom: -16px;
+  padding: 44px 36px;
+  animation: heroCardPulse 5s var(--ease-breath) infinite;
+}
+
+@keyframes heroCardPulse {
+  0%, 100% { 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 80px rgba(255, 69, 0, 0.06),
+      0 0 80px rgba(255, 69, 0, 0.25),
+      0 25px 70px rgba(0, 0, 0, 0.55);
+  }
+  50% { 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 0 100px rgba(255, 69, 0, 0.08),
+      0 0 110px rgba(255, 69, 0, 0.35),
+      0 25px 70px rgba(0, 0, 0, 0.55);
+  }
+}
+
+.pricingCard.hero:hover {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 100px rgba(255, 69, 0, 0.1),
+    0 0 130px rgba(255, 69, 0, 0.4),
+    0 35px 90px rgba(0, 0, 0, 0.65);
+  transform: translateY(-14px);
+  animation: none;
+}
+
+/* Studio Plan - Factory */
+.pricingCard.factory {
+  background: linear-gradient(180deg, #151515 0%, #0A0A0A 100%);
+  border-color: #2A2A2A;
+}
+
+.pricingCard.factory:hover {
+  border-color: #404040;
+}
+
+/* Popular Ribbon - Glowing Tag */
+.popularRibbon {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 26px;
+  background: linear-gradient(135deg, #FF5A1A 0%, var(--cari-orange) 50%, #CC3700 100%);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 30px rgba(255, 69, 0, 0.5),
+    0 6px 20px rgba(0, 0, 0, 0.35);
+  animation: ribbonPulse 3s var(--ease-breath) infinite;
+}
+
+@keyframes ribbonPulse {
+  0%, 100% { 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.3), 
+      0 0 30px rgba(255, 69, 0, 0.5), 
+      0 6px 20px rgba(0, 0, 0, 0.35); 
+  }
+  50% { 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.3), 
+      0 0 45px rgba(255, 69, 0, 0.65), 
+      0 6px 20px rgba(0, 0, 0, 0.35); 
+  }
+}
+
+.planIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.planIcon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.pricingCard.stock .planIcon {
+  background: rgba(82, 82, 91, 0.2);
+}
+
+.pricingCard.stock .planIcon svg {
+  color: #71717A;
+}
+
+.pricingCard.hero .planIcon {
+  background: rgba(255, 69, 0, 0.15);
+}
+
+.pricingCard.hero .planIcon svg {
+  color: #FF4500;
+}
+
+.pricingCard.factory .planIcon {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pricingCard.factory .planIcon svg {
+  color: #FFFFFF;
+}
+
+.planName {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+.planDesc {
+  font-size: 14px;
+  color: #71717A;
+  margin-bottom: 28px;
+}
+
+/* Price Display */
+.planPrice {
+  margin-bottom: 28px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.priceCurrency {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #52525B;
+}
+
+.priceAmount {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  font-style: italic;
+  color: #FFFFFF;
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.pricingCard.hero .priceAmount {
+  color: #FF4500;
+  text-shadow: 0 0 40px rgba(255, 69, 0, 0.3);
+}
+
+.pricePeriod {
+  font-size: 16px;
+  color: #52525B;
+  margin-left: 4px;
+}
+
+.priceAnnual {
+  font-size: 13px;
+  color: #3F3F46;
+  margin-top: 8px;
+}
+
+/* Plan Buttons */
+.planBtn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.pricingCard.stock .planBtn {
+  background: #27272A;
+  color: #FFFFFF;
+}
+
+.pricingCard.stock .planBtn:hover {
+  background: #3F3F46;
+}
+
+.pricingCard.hero .planBtn {
+  background: linear-gradient(180deg, #FF5A1A 0%, var(--cari-orange) 40%, #CC3700 100%);
+  color: #FFFFFF;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.15),
+    0 0 45px rgba(255, 69, 0, 0.45);
+  animation: pulseBtn 3s var(--ease-breath) infinite;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.pricingCard.hero .planBtn:hover {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.1),
+    0 0 70px rgba(255, 69, 0, 0.65);
+  transform: translateY(-3px);
+  animation: none;
+}
+
+@keyframes pulseBtn {
+  0%, 100% { 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.35), 
+      inset 0 -2px 10px rgba(0, 0, 0, 0.15), 
+      0 0 45px rgba(255, 69, 0, 0.45); 
+  }
+  50% { 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.35), 
+      inset 0 -2px 10px rgba(0, 0, 0, 0.15), 
+      0 0 60px rgba(255, 69, 0, 0.55); 
+  }
+}
+
+.pricingCard.factory .planBtn {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+.pricingCard.factory .planBtn:hover {
+  background: #E5E5E5;
+}
+
+/* Feature List */
+.planFeatures {
+  list-style: none;
+}
+
+.planFeatures li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 14px;
+  color: #A1A1AA;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.planFeatures li:last-child {
+  border-bottom: none;
+}
+
+.featureCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.featureCheck svg {
+  width: 12px;
+  height: 12px;
+}
+
+.pricingCard.stock .featureCheck {
+  background: rgba(82, 82, 91, 0.3);
+}
+
+.pricingCard.stock .featureCheck svg {
+  color: #71717A;
+}
+
+.pricingCard.hero .featureCheck {
+  background: rgba(255, 69, 0, 0.2);
+}
+
+.pricingCard.hero .featureCheck svg {
+  color: #FF4500;
+}
+
+.pricingCard.factory .featureCheck {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.pricingCard.factory .featureCheck svg {
+  color: #FFFFFF;
+}
+
+.featureDisabled {
+  color: #3F3F46 !important;
+}
+
+.featureDisabled .featureCheck {
+  background: rgba(63, 63, 70, 0.2) !important;
+}
+
+.featureDisabled .featureCheck svg {
+  color: #3F3F46 !important;
+}
+
+/* ================================
+   SPEC SHEET (Comparison Table)
+=============================== */
+.specSection {
+  margin-bottom: 80px;
+}
+
+.specTitle {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 40px;
+  font-family: var(--font-outfit), sans-serif;
+}
+
+.specTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0A0A0A;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.specTable thead tr {
+  background: #111111;
+}
+
+.specTable th {
+  padding: 20px 24px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #71717A;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.specTable th:not(:first-child) {
+  text-align: center;
+}
+
+.specTable th.proCol {
+  color: #FF4500;
+  background: linear-gradient(180deg, rgba(255, 69, 0, 0.1) 0%, transparent 100%);
+}
+
+.specTable td {
+  padding: 18px 24px;
+  font-size: 14px;
+  color: #A1A1AA;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.specTable td:not(:first-child) {
+  text-align: center;
+}
+
+.specTable td.proCol {
+  background: linear-gradient(180deg, rgba(255, 69, 0, 0.05) 0%, transparent 100%);
+}
+
+.specTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.specTable tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.specCheck {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.specCheck.yes {
+  background: rgba(255, 69, 0, 0.15);
+}
+
+.specCheck.yes svg {
+  color: #FF4500;
+}
+
+.specCheck.no {
+  background: rgba(63, 63, 70, 0.3);
+}
+
+.specCheck.no svg {
+  color: #3F3F46;
+}
+
+.specCheck svg {
+  width: 14px;
+  height: 14px;
+}
+
+.specValue {
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.proCol .specValue {
+  color: #FF4500;
+}
+
+/* ================================
+   FAQ Section
+=============================== */
+.faqSection {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faqTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: var(--font-outfit), sans-serif;
+}
+
+.faqItem {
+  background: rgba(10, 10, 12, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: all 0.4s var(--ease-breath);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.faqItem:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.faqItem.open {
+  border-color: rgba(255, 69, 0, 0.2);
+  box-shadow: 
+    inset 0 0 30px rgba(255, 69, 0, 0.03),
+    0 0 30px rgba(255, 69, 0, 0.08);
+}
+
+.faqQuestion {
+  width: 100%;
+  padding: 22px 26px;
+  background: transparent;
+  border: none;
+  color: #FAFAFA;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.35s var(--ease-breath);
+}
+
+.faqQuestion:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.faqQuestion svg {
+  width: 20px;
+  height: 20px;
+  color: #52525B;
+  transition: all 0.4s var(--ease-breath);
+}
+
+.faqItem.open .faqQuestion svg {
+  transform: rotate(180deg);
+  color: var(--cari-orange);
+  filter: drop-shadow(0 0 6px rgba(255, 69, 0, 0.4));
+}
+
+.faqAnswer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.faqItem.open .faqAnswer {
+  max-height: 200px;
+}
+
+.faqAnswer p {
+  padding: 0 24px 20px;
+  font-size: 14px;
+  color: #71717A;
+  line-height: 1.7;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .pricingGrid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  
+  .pricingCard.hero {
+    margin: 0;
+    padding: 36px;
+  }
+  
+  .nitroGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 100px 24px 60px;
+  }
+  
+  .nitroGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .specTable {
+    font-size: 12px;
+  }
+  
+  .specTable th,
+  .specTable td {
+    padding: 12px 8px;
+  }
+}
+
+@media (max-width: 500px) {
+  .nitroGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,222 @@
+.studioBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  
+  /* Premium lighting with depth */
+  background: 
+    /* Subtle grid for depth (very low contrast) */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.018) 0px,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 42px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.014) 0px,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 42px
+    ),
+    /* Spotlight: Premium diffused light from above */
+    radial-gradient(
+      ellipse 80% 75% at 50% 0%, 
+      rgba(255, 255, 255, 0.32) 0%, 
+      rgba(255, 255, 255, 0.12) 30%, 
+      rgba(255, 255, 255, 0.04) 50%, 
+      transparent 70%
+    ),
+    /* Subtle orange ambient from center */
+    radial-gradient(
+      ellipse 100% 80% at 50% 50%,
+      rgba(255, 69, 0, 0.03) 0%,
+      transparent 50%
+    ),
+    /* Cool fill light for extra depth */
+    radial-gradient(
+      ellipse 60% 55% at 15% 60%,
+      rgba(56, 189, 248, 0.04) 0%,
+      transparent 60%
+    ),
+    /* Vignette: Deep cinematic darkening */
+    radial-gradient(
+      circle at 50% 50%, 
+      transparent 25%, 
+      rgba(0, 0, 0, 0.35) 75%, 
+      rgba(0, 0, 0, 0.75) 100%
+    ),
+    /* Base color - deeper black */
+    var(--cari-void);
+}
+
+.studioBackground::before {
+  content: '';
+  position: absolute;
+  inset: -8vh -8vw;
+  pointer-events: none;
+
+  /* Scattered orange embers (soft blur blobs) */
+  background:
+    radial-gradient(420px 320px at 18% 26%, rgba(255, 69, 0, 0.18), transparent 62%),
+    radial-gradient(520px 380px at 78% 18%, rgba(255, 69, 0, 0.15), transparent 64%),
+    radial-gradient(460px 360px at 64% 72%, rgba(255, 69, 0, 0.14), transparent 64%),
+    radial-gradient(560px 420px at 24% 82%, rgba(255, 69, 0, 0.12), transparent 68%),
+    radial-gradient(360px 280px at 86% 54%, rgba(255, 69, 0, 0.11), transparent 66%);
+
+  filter: blur(44px);
+  opacity: 1;
+  mix-blend-mode: screen;
+  transform: translate3d(0, 0, 0);
+}
+
+.studioBackground::after {
+  content: '';
+  position: absolute;
+  top: -18vh;
+  left: 50%;
+  width: min(920px, 70vw);
+  height: 140vh;
+  transform: translateX(-50%);
+  pointer-events: none;
+
+  /* Light beam: top-center, fading downward */
+  background:
+    radial-gradient(
+      ellipse 60% 22% at 50% 6%,
+      rgba(255, 255, 255, 0.27) 0%,
+      rgba(255, 255, 255, 0.09) 38%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.27) 0%,
+      rgba(255, 255, 255, 0.09) 22%,
+      rgba(255, 255, 255, 0.03) 52%,
+      transparent 78%
+    );
+
+  clip-path: polygon(50% 0%, 66% 10%, 82% 100%, 18% 100%, 34% 10%);
+  filter: blur(18px);
+  opacity: 1;
+  mix-blend-mode: screen;
+}
+
+/* Strong edge lights (left/right) for depth */
+.edgeLights {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+
+.edgeLights::before,
+.edgeLights::after {
+  content: '';
+  position: absolute;
+  top: -10vh;
+  bottom: -10vh;
+  width: min(520px, 44vw);
+  filter: blur(58px);
+  opacity: 0.95;
+  transform: translate3d(0, 0, 0);
+}
+
+.edgeLights::before {
+  left: -18vw;
+  background:
+    radial-gradient(closest-side at 65% 40%, rgba(255, 69, 0, 0.55), transparent 70%),
+    radial-gradient(closest-side at 70% 70%, rgba(255, 69, 0, 0.35), transparent 68%);
+}
+
+.edgeLights::after {
+  right: -18vw;
+  background:
+    radial-gradient(closest-side at 35% 42%, rgba(255, 69, 0, 0.55), transparent 70%),
+    radial-gradient(closest-side at 30% 72%, rgba(255, 69, 0, 0.35), transparent 68%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .studioBackground::before {
+    animation: emberDrift 14s ease-in-out infinite;
+  }
+
+  .studioBackground::after {
+    animation: beamDrift 10s ease-in-out infinite;
+  }
+
+  .edgeLights::before {
+    animation: edgePulseLeft 9s ease-in-out infinite;
+  }
+
+  .edgeLights::after {
+    animation: edgePulseRight 9.6s ease-in-out infinite;
+  }
+
+  @keyframes emberDrift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translate3d(0, -1.6vh, 0) scale(1.02);
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes beamDrift {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0) scaleX(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translateX(-50%) translateY(1.2vh) scaleX(1.03);
+      opacity: 1;
+    }
+  }
+
+  @keyframes edgePulseLeft {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scaleX(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: translate3d(2.2vw, 0, 0) scaleX(1.05);
+      opacity: 1;
+    }
+  }
+
+  @keyframes edgePulseRight {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scaleX(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: translate3d(-2.2vw, 0, 0) scaleX(1.05);
+      opacity: 1;
+    }
+  }
+}
+
+.noiseOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+

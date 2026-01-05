@@ -1,0 +1,330 @@
+/* Floating Control Panel (macOS Style) */
+.controlPanel {
+  position: fixed;
+  isolation: isolate;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 800px;
+  height: 72px;
+  padding: 0 40px;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 30%,
+      rgba(0, 0, 0, 0.08) 100%
+    ),
+    rgba(24, 24, 27, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    0 2px 10px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  z-index: 100;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.controlPanel::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 23px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 20% 0%,
+    rgba(255, 255, 255, 0.12),
+    transparent 55%
+  );
+  opacity: 0.7;
+}
+
+/* Collapsed State */
+.controlPanel.collapsed {
+  bottom: 20px;
+  height: 56px;
+  padding: 0 24px;
+  gap: 20px;
+  min-width: 600px;
+  opacity: 0.88;
+}
+
+.controlPanel.collapsed .toolbarItem {
+  transform: scale(0.85);
+}
+
+.controlPanel.collapsed .toolbarLabel {
+  display: none;
+}
+
+.controlPanel.collapsed .toolbarItem.active .toolbarLabel {
+  display: block;
+}
+
+/* Video Toolbar */
+.controlPanel.videoToolbar {
+  justify-content: center;
+  min-width: auto;
+}
+
+/* Toolbar Item */
+.toolbarItem {
+  width: 78px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  color: #FFFFFF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.toolbarItem:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.toolbarItem:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.toolbarItem:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Normal State - Beyaz Glow */
+.toolbarItem .iconBox {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+.toolbarItem .toolbarLabel {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.toolbarItem:hover .iconBox {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+  transform: scale(1.17); /* 24px * 1.17 ≈ 28px */
+}
+
+.toolbarItem:hover .toolbarLabel {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+/* Active State - Sarı Glow */
+.toolbarItem.active {
+  color: #FF4500;
+  background-color: rgba(255, 69, 0, 0.08);
+  border: 1px solid rgba(255, 69, 0, 0.45);
+  border-radius: 12px;
+  padding: 8px;
+  animation: activePulse 2s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(255, 69, 0, 0);
+  }
+}
+
+.toolbarItem.active .iconBox {
+  filter: drop-shadow(0 0 12px rgba(255, 69, 0, 0.75)) drop-shadow(0 0 20px rgba(255, 69, 0, 0.35));
+}
+
+.toolbarItem.active .toolbarLabel {
+  text-shadow: 0 0 12px rgba(255, 69, 0, 0.75), 0 0 20px rgba(255, 69, 0, 0.35);
+}
+
+/* Completed State - Yeşil Glow */
+.toolbarItem.completed {
+  color: #22C55E;
+  background-color: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.toolbarItem.completed .iconBox {
+  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.7)) drop-shadow(0 0 18px rgba(34, 197, 94, 0.35));
+}
+
+.toolbarItem.completed .toolbarLabel {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.7), 0 0 18px rgba(34, 197, 94, 0.35);
+}
+
+/* Video Mode - Purple/Red Accent */
+:global(body.video-mode) .toolbarItem.active {
+  color: var(--video-accent);
+}
+
+:global(body.video-mode) .toolbarItem.active .iconBox {
+  filter: drop-shadow(0 0 12px var(--video-accent-glow)) drop-shadow(0 0 20px rgba(167, 139, 250, 0.4));
+}
+
+:global(body.video-mode) .toolbarItem.active .toolbarLabel {
+  text-shadow: 0 0 12px var(--video-accent-glow), 0 0 20px rgba(167, 139, 250, 0.4);
+}
+
+:global(body.video-mode) .toolbarItem.completed {
+  color: var(--video-completed);
+}
+
+:global(body.video-mode) .toolbarItem.completed .iconBox {
+  filter: drop-shadow(0 0 10px var(--video-completed-glow)) drop-shadow(0 0 18px rgba(34, 197, 94, 0.35));
+}
+
+:global(body.video-mode) .toolbarItem.completed .toolbarLabel {
+  text-shadow: 0 0 10px var(--video-completed-glow), 0 0 18px rgba(34, 197, 94, 0.35);
+}
+
+.iconBox {
+  width: 28px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.toolbarLabel {
+  font-size: 10px;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+}
+
+/* Tooltips */
+.toolbarItem::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  padding: 8px 14px;
+  background-color: #FFFFFF;
+  color: #09090B;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 8px;
+  white-space: normal;
+  max-width: 280px;
+  text-align: center;
+  line-height: 1.4;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  word-wrap: break-word;
+}
+
+.toolbarItem::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  border: 5px solid transparent;
+  border-top-color: #FFFFFF;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toolbarItem:hover::after,
+.toolbarItem:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toolbarItem.locked::after,
+.toolbarItem.locked::before {
+  display: none;
+}
+
+
+/* Locked State */
+.toolbarItem.locked {
+  position: relative;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.toolbarItem.locked .iconBox {
+  filter: none;
+}
+
+.toolbarItem.locked .toolbarLabel {
+  text-shadow: none;
+}
+
+.toolbarItem.locked:hover {
+  opacity: 0.5;
+  transform: none;
+}
+
+.toolbarItem.locked:hover .iconBox {
+  filter: none;
+}
+
+.completedBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  background-color: #22C55E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6), 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: checkmarkPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 1;
+}
+
+@keyframes checkmarkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.lockedBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background-color: #52525B;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #18181B;
+}
+

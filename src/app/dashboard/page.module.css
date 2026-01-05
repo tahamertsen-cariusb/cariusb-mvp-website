@@ -1,0 +1,1490 @@
+/* Main Container */
+.dashboardContainer {
+  position: relative;
+  z-index: 10;
+  min-height: calc(100vh - 200px);
+  padding: 96px 48px 48px;
+}
+
+/* Page Header */
+.pageHeader {
+  margin-bottom: 32px;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.createHeaderButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background-color: rgba(139, 92, 246, 0.10);
+  border: 1px solid rgba(139, 92, 246, 0.30);
+  border-radius: 12px;
+  color: rgba(139, 92, 246, 0.9);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-breath);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.createHeaderButton svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.4s var(--ease-breath);
+}
+
+.createHeaderButton:hover {
+  background-color: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #C4B5FD;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 30px rgba(139, 92, 246, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.createHeaderButton:active {
+  transform: translateY(0);
+}
+
+.createHeaderButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.headerLeft {
+  flex: 1;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+.pageSubtitle {
+  font-size: 14px;
+  color: #71717A;
+}
+
+.studioButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background-color: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  color: rgba(139, 92, 246, 0.9);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-breath);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.studioButton svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.4s var(--ease-breath);
+}
+
+.studioButton:hover {
+  background-color: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #C4B5FD;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 30px rgba(139, 92, 246, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.studioButton:hover svg {
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.5));
+}
+
+.studioButton:active {
+  transform: translateY(0);
+}
+
+/* Garages Grid */
+.garagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.garagesGridEmpty {
+  grid-template-columns: 1fr;
+}
+
+/* Garage Card - Premium Glass */
+.garageCard {
+  background-color: rgba(15, 15, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-breath);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 0 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.garageCard:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 69, 0, 0.2);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 40px rgba(255, 69, 0, 0.03),
+    0 30px 60px rgba(0, 0, 0, 0.4),
+    0 0 50px rgba(255, 69, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Create Project Card */
+.createGarageCard {
+  appearance: none;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.createGarageCard:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.createGarageCard::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.10) 20%,
+    rgba(168, 85, 247, 0.16) 40%,
+    rgba(139, 92, 246, 0.20) 50%,
+    rgba(168, 85, 247, 0.16) 60%,
+    rgba(139, 92, 246, 0.10) 80%,
+    transparent
+  );
+}
+
+.createGarageCard:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 40px rgba(139, 92, 246, 0.05),
+    0 30px 60px rgba(0, 0, 0, 0.4),
+    0 0 55px rgba(139, 92, 246, 0.18);
+}
+
+.createGarageCard:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 3px;
+}
+
+.createGarageThumbnailContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(139, 92, 246, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 69, 0, 0.10) 0%, transparent 55%),
+    linear-gradient(135deg, rgba(5, 5, 6, 1) 0%, rgba(18, 18, 22, 1) 100%);
+}
+
+.createGarageIcon {
+  width: 74px;
+  height: 74px;
+  border-radius: 22px;
+  background: rgba(139, 92, 246, 0.10);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(196, 181, 253, 0.95);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 30px rgba(139, 92, 246, 0.18);
+  transition: transform 0.45s var(--ease-breath), box-shadow 0.45s var(--ease-breath);
+}
+
+.createGarageIcon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.createGarageCard:hover .createGarageIcon {
+  transform: scale(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 40px rgba(139, 92, 246, 0.28);
+}
+
+.createGarageInfo {
+  padding: 16px 20px 18px;
+}
+
+.createGarageCta {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #71717A;
+}
+
+/* Lava Trail Effect on Hover */
+.garageCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 69, 0, 0.08) 20%,
+    rgba(255, 107, 53, 0.12) 40%,
+    rgba(255, 85, 20, 0.15) 50%,
+    rgba(255, 107, 53, 0.12) 60%,
+    rgba(255, 69, 0, 0.08) 80%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.garageCard:hover::after {
+  animation: lavaTrail 0.8s ease-out;
+  opacity: 1;
+}
+
+@keyframes lavaTrail {
+  0% { 
+    left: -100%; 
+    opacity: 0;
+  }
+  10% { 
+    opacity: 1;
+  }
+  90% { 
+    opacity: 1;
+  }
+  100% { 
+    left: 100%; 
+    opacity: 0;
+  }
+}
+
+.garageCard.selected {
+  transform: scale(1.05) translateY(-10px);
+  border-color: var(--cari-orange);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 50px rgba(255, 69, 0, 0.05),
+    0 40px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(255, 69, 0, 0.15);
+  z-index: 5;
+}
+
+.garageCard:hover .garageThumbnail,
+.garageCard.selected .garageThumbnail {
+  transform: scale(1.08);
+}
+
+.garageThumbnailContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background-color: var(--cari-deep);
+}
+
+.garageThumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-breath);
+}
+
+.garageThumbnailPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #060608 0%, #101014 100%);
+}
+
+.garageThumbnailPlaceholder svg {
+  width: 64px;
+  height: 64px;
+  color: #1f1f24;
+  transition: all 0.5s var(--ease-breath);
+}
+
+.garageCard:hover .garageThumbnailPlaceholder svg {
+  color: rgba(255, 69, 0, 0.3);
+  filter: drop-shadow(0 0 20px rgba(255, 69, 0, 0.2));
+}
+
+.garageBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 12px;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #A1A1AA;
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.02);
+  transition: all 0.4s var(--ease-breath);
+  z-index: 2;
+}
+
+.garageCard:hover .garageBadge {
+  background-color: rgba(255, 69, 0, 0.15);
+  border-color: rgba(255, 69, 0, 0.2);
+  color: var(--cari-orange);
+}
+
+.videoBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 12px;
+  background-color: rgba(139, 92, 246, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #E9D5FF;
+  box-shadow: inset 0 0 15px rgba(139, 92, 246, 0.2);
+  transition: all 0.4s var(--ease-breath);
+  z-index: 2;
+}
+
+.garageCard:hover .videoBadge {
+  background-color: rgba(139, 92, 246, 0.85);
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #FFFFFF;
+  box-shadow: 
+    inset 0 0 20px rgba(139, 92, 246, 0.3),
+    0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+/* Garage Actions */
+.garageActions {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-breath);
+  z-index: 3;
+}
+
+.garageCard:hover .garageActions {
+  opacity: 1;
+}
+
+.garageActionBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: #A1A1AA;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-breath);
+  padding: 0;
+}
+
+.garageActionBtn:hover {
+  background-color: rgba(255, 69, 0, 0.15);
+  border-color: rgba(255, 69, 0, 0.2);
+  color: var(--cari-orange);
+  transform: scale(1.1);
+}
+
+.garageActionBtn.deleteBtn:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+}
+
+.garageActionBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.garageActionBtn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Delete Button */
+.deleteButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  color: #A1A1AA;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-breath);
+  padding: 0;
+  z-index: 3;
+  opacity: 0;
+}
+
+.garageCard:hover .deleteButton {
+  opacity: 1;
+}
+
+.deleteButton:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #EF4444;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.deleteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.deleteButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.deleteSpinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Delete Confirmation Modal */
+.deleteModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(900px 420px at 50% 0%, rgba(255, 69, 0, 0.10), transparent 60%),
+    rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(10px);
+}
+
+.deleteModal {
+  width: min(520px, calc(100vw - 48px));
+  border-radius: 16px;
+  background: rgba(24, 24, 27, 0.88);
+  border: 1px solid rgba(255, 69, 0, 0.22);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 69, 0, 0.08);
+  padding: 18px 18px 16px;
+  color: #FAFAFA;
+}
+
+.deleteModalHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.deleteModalIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  color: #EF4444;
+  flex: 0 0 auto;
+}
+
+.deleteModalTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+.deleteModalDesc {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.deleteModalProjectName {
+  display: inline-block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.deleteModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.deleteModalCancel,
+.deleteModalConfirm {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.25);
+  color: #E4E4E7;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deleteModalCancel:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.deleteModalConfirm {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.95) 0%, rgba(239, 68, 68, 0.78) 100%);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #FFFFFF;
+  box-shadow: 0 10px 26px rgba(239, 68, 68, 0.18);
+}
+
+.deleteModalConfirm:hover:not(:disabled) {
+  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.26);
+  transform: translateY(-1px);
+}
+
+.deleteModalConfirm:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.deleteModalCancel:disabled,
+.deleteModalConfirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Project Preview Modal */
+.previewOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(1000px 520px at 50% 0%, rgba(255, 69, 0, 0.12), transparent 60%),
+    rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.previewModal {
+  width: min(1100px, calc(100vw - 48px));
+  height: min(720px, calc(100vh - 96px));
+  border-radius: 18px;
+  background: rgba(10, 10, 10, 0.72);
+  border: 1px solid rgba(255, 69, 0, 0.22);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 69, 0, 0.08);
+  overflow: hidden;
+  position: relative;
+  translate: 0 clamp(12px, 3vh, 36px);
+  animation: previewGrow 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes previewGrow {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.previewClose {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.2s ease;
+}
+
+.previewClose:hover {
+  background: rgba(255, 69, 0, 0.12);
+  border-color: rgba(255, 69, 0, 0.22);
+  color: #FF4500;
+  transform: translateY(-1px);
+}
+
+.previewBody {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+
+.previewMedia {
+  position: relative;
+  height: 100%;
+  background:
+    radial-gradient(900px 500px at 50% 20%, rgba(255, 69, 0, 0.12), transparent 62%),
+    rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1);
+  animation: mediaGrow 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes mediaGrow {
+  from {
+    transform: scale(0.985);
+    filter: blur(2px);
+  }
+  to {
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.previewPlaceholder {
+  width: min(560px, 70%);
+  height: min(360px, 52%);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.previewPlaceholder svg {
+  width: 64px;
+  height: 64px;
+}
+
+.previewVideoBadge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.previewPanel {
+  height: 100%;
+  background: rgba(24, 24, 27, 0.92);
+  border-left: 1px solid rgba(255, 69, 0, 0.14);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: panelIn 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.previewPanelStack {
+  margin-top: clamp(18px, 8vh, 110px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@keyframes panelIn {
+  from {
+    transform: translateX(22px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.previewHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.previewTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #FAFAFA;
+  letter-spacing: 0.01em;
+}
+
+.previewHint {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 69, 0, 0.18);
+  background: rgba(255, 69, 0, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.previewRenameRow {
+  margin-top: 4px;
+}
+
+.previewActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.previewTileDownload {
+  margin-top: 12px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.24);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 10px;
+  gap: 8px;
+}
+
+.previewTileDownload:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.previewTileWide {
+  grid-column: 1 / -1;
+  aspect-ratio: 2 / 0.64;
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+}
+
+.previewTileWide.previewTileDownload {
+  aspect-ratio: 2 / 0.096768;
+  padding: 4px 10px;
+  gap: 10px;
+}
+
+.previewTile:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.previewTile {
+  aspect-ratio: 1 / 0.64;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.35s var(--ease-breath);
+  font-family: inherit;
+  padding: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 11px;
+}
+
+.previewTile svg {
+  width: 22px;
+  height: 22px;
+}
+
+.previewTileText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.previewTileLabel {
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.previewTileDesc {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 550;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 15ch;
+  line-height: 1.2;
+}
+
+.previewTileWide .previewTileText {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.previewTileWide .previewTileDesc {
+  max-width: 28ch;
+}
+
+.previewTileNeutral:hover {
+  border-color: rgba(255, 69, 0, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.previewTileStudio {
+  background-color: rgba(139, 92, 246, 0.10);
+  border-color: rgba(139, 92, 246, 0.30);
+  color: rgba(139, 92, 246, 0.92);
+}
+
+.previewTileStudio:hover {
+  background-color: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.55);
+  color: #C4B5FD;
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.22), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.previewTileOrange {
+  background-color: rgba(255, 69, 0, 0.10);
+  border-color: rgba(255, 69, 0, 0.30);
+  color: rgba(255, 147, 97, 0.95);
+}
+
+.previewTileOrange:hover {
+  background-color: rgba(255, 69, 0, 0.14);
+  border-color: rgba(255, 69, 0, 0.55);
+  color: #FFD2BF;
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 69, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.previewTileDanger {
+  background-color: rgba(239, 68, 68, 0.10);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.previewTileDanger:hover {
+  background-color: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.20), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Create Project Loading Overlay */
+.loadingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 12px,
+      transparent 12px,
+      transparent 24px
+    ),
+    radial-gradient(800px 420px at 50% 10%, rgba(139, 92, 246, 0.12), transparent 60%),
+    rgba(4, 4, 6, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.loadingCard {
+  width: min(420px, calc(100vw - 48px));
+  border-radius: 18px;
+  background: rgba(10, 10, 12, 0.85);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(139, 92, 246, 0.08);
+  padding: 22px 24px;
+  color: #FAFAFA;
+  text-align: center;
+  display: grid;
+  gap: 10px;
+  animation: previewGrow 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.loadingTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.loadingMessage {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+}
+
+.loadingSpinner {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 4px;
+  color: rgba(196, 181, 253, 0.95);
+}
+
+@media (max-width: 820px) {
+  .previewModal {
+    height: min(760px, calc(100vh - 96px));
+  }
+
+  .previewBody {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .previewPanel {
+    border-left: none;
+    border-top: 1px solid rgba(255, 69, 0, 0.14);
+    animation: panelUp 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  @keyframes panelUp {
+    from {
+      transform: translateY(18px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+/* Edit Name */
+.editNameContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.editNameInput {
+  flex: 1;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+  border-radius: 8px;
+  color: #FAFAFA;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s var(--ease-breath);
+}
+
+.editNameInput:focus {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--cari-orange);
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.2);
+}
+
+.editActions {
+  display: flex;
+  gap: 4px;
+}
+
+.saveBtn,
+.cancelBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #A1A1AA;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.saveBtn:hover {
+  background-color: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22C55E;
+}
+
+.cancelBtn:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+}
+
+.saveBtn svg,
+.cancelBtn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.garageInfo {
+  padding: 16px 20px;
+}
+
+.garageName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #FAFAFA;
+  margin-bottom: 6px;
+}
+
+.garageMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.garageMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #71717A;
+}
+
+.garageMetaItem svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Create New Card - Glowing Border */
+.createCard {
+  background-color: transparent;
+  border: 2px dashed rgba(255, 69, 0, 0.4);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-breath);
+  position: relative;
+  text-decoration: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+.createCard:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.createCard::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at center, rgba(255, 69, 0, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-breath);
+  z-index: -1;
+  filter: blur(20px);
+}
+
+.createCard:hover {
+  border-color: var(--cari-orange);
+  background-color: rgba(255, 69, 0, 0.04);
+  box-shadow: 
+    inset 0 0 40px rgba(255, 69, 0, 0.05),
+    0 0 50px rgba(255, 69, 0, 0.15);
+}
+
+.createCard:hover::before {
+  opacity: 1;
+}
+
+.createCard:hover .createIcon {
+  background-color: rgba(255, 69, 0, 0.18);
+  color: var(--cari-orange);
+  transform: scale(1.1);
+  box-shadow: 
+    inset 0 0 20px rgba(255, 69, 0, 0.15),
+    0 0 30px rgba(255, 69, 0, 0.25);
+}
+
+.createCard:hover .createText {
+  color: var(--cari-orange);
+  text-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+}
+
+.createIcon {
+  width: 56px;
+  height: 56px;
+  background-color: rgba(255, 69, 0, 0.08);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: all 0.5s var(--ease-breath);
+  color: var(--cari-orange);
+  box-shadow: 
+    inset 0 0 15px rgba(255, 69, 0, 0.1),
+    0 0 20px rgba(255, 69, 0, 0.1);
+}
+
+.createIcon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--cari-orange);
+  filter: drop-shadow(0 0 8px rgba(255, 69, 0, 0.3));
+  transition: filter 0.4s var(--ease-breath);
+}
+
+.createCard:hover .createIcon svg {
+  filter: drop-shadow(0 0 12px rgba(255, 69, 0, 0.5));
+}
+
+.createText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cari-orange);
+  transition: all 0.4s var(--ease-breath);
+}
+
+.createCardFull {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 400px;
+}
+
+/* Empty State */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px;
+  text-align: center;
+  min-height: 400px;
+}
+
+.emptyIcon {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 69, 0, 0.08);
+  border: 2px solid rgba(255, 69, 0, 0.15);
+  border-radius: 50%;
+  margin-bottom: 40px;
+  color: var(--cari-orange);
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 
+    0 0 40px rgba(255, 69, 0, 0.15),
+    inset 0 0 30px rgba(255, 69, 0, 0.05);
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0);
+  }
+  50% { 
+    transform: translateY(-12px);
+  }
+}
+
+.emptyIcon svg {
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0 0 25px rgba(255, 69, 0, 0.4));
+}
+
+.emptyTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #FAFAFA;
+  margin-bottom: 16px;
+  font-family: var(--font-outfit), sans-serif;
+  text-shadow: 0 0 30px rgba(255, 69, 0, 0.1);
+}
+
+.emptyMessage {
+  font-size: 16px;
+  color: #A1A1AA;
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.emptyCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 36px;
+  background: linear-gradient(180deg, #FF5A1A 0%, var(--cari-orange) 50%, #CC3700 100%);
+  border: none;
+  border-radius: 14px;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-breath);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(255, 69, 0, 0.4),
+    0 6px 20px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.emptyCta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.emptyCta:hover {
+  background: linear-gradient(180deg, #FF6B2E 0%, #FF5A1A 50%, #E03E00 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 0 60px rgba(255, 69, 0, 0.6),
+    0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.emptyCta:hover::before {
+  opacity: 1;
+}
+
+.emptyCta:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.emptyCta:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.emptyCta:disabled:hover {
+  transform: none;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(255, 69, 0, 0.4),
+    0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.emptyCta svg {
+  width: 18px;
+  height: 18px;
+}
+
+.emptyCta:focus-visible {
+  outline: 3px solid var(--cari-orange);
+  outline-offset: 4px;
+}
+
+/* Loading Skeletons */
+.garageCardSkeleton {
+  background-color: rgba(15, 15, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 22px;
+  overflow: hidden;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.skeletonThumbnail {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeletonInfo {
+  padding: 16px 20px;
+}
+
+.skeletonTitle {
+  height: 18px;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeletonMetaItem {
+  height: 14px;
+  width: 80px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboardContainer {
+    padding: 80px 24px 40px;
+  }
+  
+  .headerContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .studioButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .garagesGrid {
+    grid-template-columns: 1fr;
+  }
+}

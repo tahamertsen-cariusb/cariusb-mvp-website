@@ -1,0 +1,423 @@
+/* Generate Wrapper */
+.generateWrapper {
+  position: fixed;
+  bottom: 152px;
+  left: 50%; /* Toolbar merkezinde */
+  transform: translateX(-50%) translateY(60px);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.generateWrapper.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  z-index: 101;
+}
+
+/* Generate Actions Row */
+.generateActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateX(60px); /* Upscale yokken sağa kaydır (livery hizası) */
+  width: auto;
+}
+
+.generateActions.withUpscale {
+  transform: translateX(-50%) translateX(-30px); /* Upscale varken sola kaydır (merkez) */
+}
+
+.generateButtonWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.generateHint {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  background: rgba(24, 24, 27, 0.9);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #FAFAFA;
+  backdrop-filter: blur(12px);
+  white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.generateHint.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.generateHint::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(24, 24, 27, 0.9);
+}
+
+/* Generate Button */
+.toolbarGenerate {
+  position: relative;
+  background: linear-gradient(180deg, #FF4500 0%, #FF4500 40%, #CC3700 100%);
+  border: none;
+  border-radius: 14px 14px 0 0;
+  padding: 12px 28px;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(249, 115, 22, 0.5),
+    0 0 40px rgba(249, 115, 22, 0.3),
+    0 -4px 16px rgba(249, 115, 22, 0.4);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.toolbarGenerate:hover {
+  background: linear-gradient(180deg, #FF4500 0%, #FF4500 40%, #FF4500 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(249, 115, 22, 0.6),
+    0 0 60px rgba(249, 115, 22, 0.4),
+    0 -8px 24px rgba(249, 115, 22, 0.5);
+}
+
+.toolbarGenerate:active {
+  transform: scale(0.97);
+}
+
+.toolbarGenerate.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.toolbarGenerate.loading .btnText {
+  opacity: 0;
+}
+
+.toolbarGenerate .spinner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  opacity: 0;
+  animation: none;
+}
+
+.toolbarGenerate.loading .spinner {
+  opacity: 1;
+  animation: spin 0.8s linear infinite;
+}
+
+.btnText {
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.creditSeparator {
+  margin: 0 6px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.creditCost {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.btnStar {
+  width: 14px;
+  height: 14px;
+}
+
+.btnSeparator {
+  opacity: 0.3;
+  margin: 0 4px 0 8px;
+  font-weight: 300;
+}
+
+.btnSettingsIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 4px;
+  margin: -4px -8px -4px 0;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+  border-radius: 6px;
+}
+
+.btnSettingsIcon:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.toolbarGenerate.loading .btnSeparator,
+.toolbarGenerate.loading .btnSettingsIcon {
+  opacity: 0;
+}
+
+/* Upscale Button */
+.upscaleButton {
+  position: relative;
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 40%, #0369A1 100%);
+  border: none;
+  border-radius: 14px 14px 0 0;
+  padding: 12px 24px;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(14, 165, 233, 0.5),
+    0 0 40px rgba(14, 165, 233, 0.3),
+    0 -4px 16px rgba(14, 165, 233, 0.4);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.upscaleButton.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.upscaleButton:hover {
+  background: linear-gradient(180deg, #38BDF8 0%, #0EA5E9 40%, #0284C7 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(14, 165, 233, 0.6),
+    0 0 60px rgba(14, 165, 233, 0.4),
+    0 -8px 24px rgba(14, 165, 233, 0.5);
+}
+
+.upscaleButton:active {
+  transform: scale(0.97);
+}
+
+.upscaleButton.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.upscaleButton.loading .btnText {
+  opacity: 0;
+}
+
+.upscaleButton .spinner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  opacity: 0;
+  animation: none;
+}
+
+.upscaleButton.loading .spinner {
+  opacity: 1;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Settings Panel */
+.settingsPanel {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 260px;
+  background-color: #18181B;
+  border: 1px solid #27272A;
+  border-radius: 16px;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.settingsPanel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.settingsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #27272A;
+}
+
+.settingsHeader span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.settingsClose {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #71717A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.settingsClose:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.settingsContent {
+  padding: 12px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settingItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settingLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: #71717A;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.settingOptions {
+  display: flex;
+  gap: 6px;
+}
+
+.settingOption {
+  flex: 1;
+  padding: 8px 10px;
+  background-color: #09090B;
+  border: 1px solid #27272A;
+  border-radius: 8px;
+  color: #71717A;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.settingOption:hover {
+  border-color: #3F3F46;
+  color: #A1A1AA;
+}
+
+.settingOption.selected {
+  background-color: rgba(249, 115, 22, 0.1);
+  border-color: #FF4500;
+  color: #FF4500;
+}
+
+.settingSlider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.creativitySlider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: #27272A;
+  border-radius: 2px;
+  outline: none;
+}
+
+.creativitySlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #FF4500;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.4);
+}
+
+.creativitySlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #FF4500;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.4);
+}
+
+.sliderVal {
+  min-width: 36px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #A1A1AA;
+  text-align: right;
+}
+
+

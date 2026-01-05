@@ -1,0 +1,57 @@
+.beforeAfterToggle {
+  position: fixed;
+  bottom: 34px;
+  left: 34px;
+  display: flex;
+  align-items: center;
+  background: rgba(24, 24, 27, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(39, 39, 42, 0.6);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 2px;
+  z-index: 100;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.beforeAfterToggle.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.beforeAfterToggle.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.beforeAfterToggle.disabled .toggleBtn {
+  cursor: not-allowed;
+}
+
+.toggleBtn {
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #A1A1AA;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+.toggleBtn.active {
+  background: #FF4500;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 69, 0, 0.3);
+}
+
+.toggleBtn:hover:not(.active):not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: #FAFAFA;
+}
+

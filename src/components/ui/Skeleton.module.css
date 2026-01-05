@@ -1,0 +1,80 @@
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 69, 0, 0.05) 50%,
+    transparent 100%
+  );
+  animation: shimmerGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes shimmerGlow {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Variants */
+.text {
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.rectangular {
+  border-radius: 8px;
+}
+
+.circular {
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+/* Skeleton Card */
+.skeletonCard {
+  background-color: rgba(15, 15, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.skeletonCardContent {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+

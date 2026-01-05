@@ -1,0 +1,63 @@
+.actionButtons {
+  position: fixed;
+  bottom: 34px;
+  right: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.actionButtons.visible {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.actionButtons.disabled {
+  pointer-events: none;
+}
+
+.actionButtons.visible.disabled {
+  opacity: 0.4;
+}
+
+.actionButtons.disabled .actionBtn {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.actionBtn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  background: rgba(24, 24, 27, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(39, 39, 42, 0.6);
+  border-radius: 10px;
+  color: #A1A1AA;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.actionBtn:hover:not(:disabled) {
+  background: rgba(255, 69, 0, 0.1);
+  border-color: rgba(255, 69, 0, 0.3);
+  color: #FF4500;
+  transform: translateY(-1px);
+}
+
+.actionBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+

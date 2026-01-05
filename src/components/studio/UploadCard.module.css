@@ -1,0 +1,300 @@
+/* Upload Card Component (Command Center Glassmorphism) */
+.uploadCard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw - 48px));
+  min-height: 480px;
+  padding: 44px 44px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  z-index: 15;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 26px;
+  background: rgba(26, 26, 26, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(255, 69, 0, 0.12),
+    -140px 0 220px rgba(255, 69, 0, 0.08),
+    140px 0 220px rgba(255, 69, 0, 0.08);
+  overflow: visible;
+  isolation: isolate;
+}
+
+.uploadCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 69, 0, 0.85) 0%, rgba(255, 69, 0, 0) 70%);
+  background-size: 100% 200%;
+  background-position: 0% 200%;
+  pointer-events: none;
+  opacity: 0.9;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderScanUp 3.2s linear infinite;
+}
+
+.uploadCard::after {
+  content: '';
+  position: absolute;
+  inset: -22vh -18vw;
+  pointer-events: none;
+  background:
+    radial-gradient(980px 420px at 0% 56%, rgba(255, 69, 0, 0.22), transparent 64%),
+    radial-gradient(980px 420px at 100% 56%, rgba(255, 69, 0, 0.22), transparent 64%),
+    radial-gradient(780px 360px at 0% 40%, rgba(255, 69, 0, 0.12), transparent 66%),
+    radial-gradient(780px 360px at 100% 40%, rgba(255, 69, 0, 0.12), transparent 66%),
+    radial-gradient(900px 380px at 50% 0%, rgba(255, 69, 0, 0.08), transparent 60%),
+    radial-gradient(700px 420px at 20% 100%, rgba(255, 255, 255, 0.05), transparent 60%);
+  opacity: 1;
+  filter: blur(44px);
+  mix-blend-mode: screen;
+  z-index: -1;
+}
+
+.uploadCard:focus-visible {
+  outline: 2px solid rgba(255, 69, 0, 0.55);
+  outline-offset: 4px;
+}
+
+.isIdle {
+  animation: idlePulse 5.4s ease-in-out infinite;
+}
+
+.isDragging {
+  box-shadow:
+    0 34px 78px rgba(0, 0, 0, 0.72),
+    0 0 52px rgba(255, 69, 0, 0.22),
+    -160px 0 260px rgba(255, 69, 0, 0.14),
+    160px 0 260px rgba(255, 69, 0, 0.14);
+}
+
+.isDragging::before {
+  animation-duration: 1.1s;
+}
+
+/* Blueprint / Visual Cue */
+.blueprint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.09);
+  opacity: 0.35;
+  filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.55));
+  transition:
+    opacity 260ms ease,
+    color 260ms ease,
+    transform 260ms ease;
+  z-index: 0;
+}
+
+.uploadCard:hover .blueprint,
+.isDragging .blueprint {
+  opacity: 0.55;
+  color: rgba(255, 69, 0, 0.22);
+  transform: scale(1.02);
+}
+
+.uploadHero,
+.uploadDivider,
+.urlInputContainer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus / Shutter Icon */
+.uploadIconWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 220ms ease,
+    color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.uploadCard:hover .uploadIconWrapper,
+.isDragging .uploadIconWrapper {
+  border-color: rgba(255, 69, 0, 0.6);
+  color: #ff4500;
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 69, 0, 0.22),
+    0 0 18px rgba(255, 69, 0, 0.18);
+}
+
+.uploadHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.uploadTitle {
+  margin: 0;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+}
+
+.uploadSubtitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 450;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.02em;
+}
+
+/* Divider */
+.uploadDivider {
+  width: min(560px, 92%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dividerText {
+  white-space: nowrap;
+}
+
+/* URL Input Section */
+.urlInputContainer {
+  width: min(560px, 92%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 2px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.urlInputContainer:focus-within {
+  border-bottom-color: rgba(255, 69, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(255, 69, 0, 0.08);
+}
+
+.urlInput {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  padding: 6px 2px;
+}
+
+.urlInput::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.importButton {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.18);
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  transition:
+    transform 120ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease,
+    color 220ms ease;
+}
+
+.importButtonReady {
+  cursor: pointer;
+  color: #ffffff;
+  border-color: rgba(255, 69, 0, 0.6);
+  background: linear-gradient(180deg, rgba(255, 69, 0, 0.95) 0%, rgba(255, 69, 0, 0.8) 100%);
+  box-shadow: 0 8px 24px rgba(255, 69, 0, 0.18);
+}
+
+.importButtonReady:hover {
+  box-shadow: 0 10px 30px rgba(255, 69, 0, 0.26);
+}
+
+.importButtonReady:active {
+  transform: scale(0.97);
+}
+
+.importButton:disabled {
+  opacity: 0.75;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+@keyframes idlePulse {
+  0% {
+    box-shadow:
+      0 30px 70px rgba(0, 0, 0, 0.7),
+      0 0 38px rgba(255, 69, 0, 0.10);
+  }
+  50% {
+    box-shadow:
+      0 30px 70px rgba(0, 0, 0, 0.7),
+      0 0 50px rgba(255, 69, 0, 0.16);
+  }
+  100% {
+    box-shadow:
+      0 30px 70px rgba(0, 0, 0, 0.7),
+      0 0 38px rgba(255, 69, 0, 0.10);
+  }
+}
+
+@keyframes borderScanUp {
+  0% {
+    background-position: 0% 200%;
+    opacity: 0.92;
+  }
+  50% {
+    background-position: 0% 100%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.92;
+  }
+}
