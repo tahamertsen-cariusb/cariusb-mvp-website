@@ -79,7 +79,7 @@ export function HeroSection() {
             Start Creating
           </Link>
           <Link href="/community" className={styles.btnSecondary}>
-            View Gallery
+            View Community
           </Link>
         </div>
       </div>

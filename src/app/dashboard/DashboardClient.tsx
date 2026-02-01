@@ -20,6 +20,7 @@ export interface Project {
   title: string;
   thumbnail_url: string | null;
   type: string;
+  has_video?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -67,6 +68,27 @@ export default function DashboardClient({
     projectsRef.current = projects;
   }, [projects]);
 
+  const withVideoFlags = useCallback(
+    async (rows: Project[]) => {
+      if (rows.length === 0) return rows;
+      const ids = rows.map((p) => p.id);
+      const { data, error } = await supabase
+        .from('assets')
+        .select('project_id')
+        .eq('user_id', userId)
+        .eq('type', 'video')
+        .in('project_id', ids);
+
+      if (error) {
+        return rows;
+      }
+
+      const set = new Set((data || []).map((row) => (row as any).project_id as string));
+      return rows.map((p) => ({ ...p, has_video: Boolean(p.has_video) || set.has(p.id) }));
+    },
+    [supabase, userId]
+  );
+
   const fetchProjects = useCallback(async () => {
     setLoading(true);
     setErrorMessage(null);
@@ -92,7 +114,7 @@ export default function DashboardClient({
 
       const uniqueProjects = new Map<string, Project>();
       (data || []).forEach((project) => uniqueProjects.set(project.id, project));
-      const nextProjects = Array.from(uniqueProjects.values());
+      const nextProjects = await withVideoFlags(Array.from(uniqueProjects.values()));
       setProjects(nextProjects);
       setBrokenThumbnailIds((prev) => {
         if (prev.size === 0) return prev;
@@ -108,7 +130,7 @@ export default function DashboardClient({
     } finally {
       setLoading(false);
     }
-  }, [router]);
+  }, [router, withVideoFlags]);
 
   useEffect(() => {
     const handleFocus = () => {
@@ -494,6 +516,11 @@ export default function DashboardClient({
     ? projects.find((project) => project.id === previewProjectId) || null
     : null;
 
+  const getDesignPreviewUrl = (project: Project) => {
+    const hasVideo = project.type === 'video' || Boolean(project.has_video);
+    return hasVideo ? `/design-preview?project=${project.id}&mode=video` : `/design-preview?project=${project.id}`;
+  };
+
   return (
     <>
       <Navbar />
@@ -585,8 +612,11 @@ export default function DashboardClient({
                   <circle cx="17" cy="17" r="2" />
                 </svg>
               </div>
-              <h2 className={styles.emptyTitle}>No Projects Yet</h2>
-              <p className={styles.emptyMessage}>Create your first project to start visualizing your vehicles</p>
+              <h2 className={styles.emptyTitle}>Let’s create your first project</h2>
+              <p className={styles.emptyMessage}>Start your first garage in seconds—upload a photo and generate your first render.</p>
+              <button onClick={handleCreateProject} className={styles.emptyCta} disabled={creatingProject}>
+                {creatingProject ? 'Creating…' : 'Create Project'}
+              </button>
             </div>
           )}
 
@@ -702,7 +732,7 @@ export default function DashboardClient({
                       </svg>
                     </div>
                   )}
-                  {project.type === 'video' && <span className={styles.videoBadge}>Video</span>}
+                  {(project.type === 'video' || project.has_video) && <span className={styles.videoBadge}>Video</span>}
                   <button
                     className={styles.deleteButton}
                     onClick={(e) => handleDeleteProject(e, project.project_id)}
@@ -935,7 +965,7 @@ export default function DashboardClient({
                         <button
                           type="button"
                           className={`${styles.previewTile} ${styles.previewTileWide} ${styles.previewTileStudio}`}
-                          onClick={() => router.push(`/design-preview?project=${previewProject.id}`)}
+                          onClick={() => router.push(getDesignPreviewUrl(previewProject))}
                         >
                           <svg
                             viewBox="0 0 24 24"
@@ -980,11 +1010,11 @@ export default function DashboardClient({
                             <span className={styles.previewTileDesc}>Change project title</span>
                           </div>
                         </button>
-                        <button
-                          type="button"
-                          className={`${styles.previewTile} ${styles.previewTileOrange}`}
-                          onClick={() =>
-                            void copyToClipboard(`${window.location.origin}/design-preview?project=${previewProject.id}`)
+                          <button
+                            type="button"
+                            className={`${styles.previewTile} ${styles.previewTileOrange}`}
+                            onClick={() =>
+                            void copyToClipboard(`${window.location.origin}${getDesignPreviewUrl(previewProject)}`)
                           }
                         >
                           <svg

@@ -1,0 +1,125 @@
+.main {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 80px;
+}
+
+.card {
+  width: min(720px, 100%);
+  padding: 48px 28px;
+  background: rgba(15, 15, 18, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  text-align: center;
+  backdrop-filter: blur(18px);
+}
+
+.icon {
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 18px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 69, 0, 0.08);
+  border: 1px solid rgba(255, 69, 0, 0.18);
+  color: var(--cari-orange);
+  box-shadow: 0 0 45px rgba(255, 69, 0, 0.12);
+}
+
+.icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.code {
+  margin: 0;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.32em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.title {
+  margin: 10px 0 0;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 44px;
+  line-height: 1.05;
+  font-weight: 800;
+  color: #FAFAFA;
+}
+
+.subtitle {
+  margin: 14px auto 0;
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.actions {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.primary {
+  background: rgba(255, 69, 0, 0.14);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+  color: #FF4500;
+  box-shadow: 0 0 30px rgba(255, 69, 0, 0.18);
+}
+
+.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 48px rgba(255, 69, 0, 0.25);
+}
+
+.secondary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.secondary:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.primary:focus-visible,
+.secondary:focus-visible {
+  outline: 2px solid var(--cari-orange);
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 40px 20px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+}
+

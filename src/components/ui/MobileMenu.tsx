@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import { createSupabaseClient } from '@/lib/supabase';
 import styles from './MobileMenu.module.css';
@@ -14,6 +14,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const { isLoggedIn, user, logout: logoutStore } = useAuthStore();
   const menuRef = useRef<HTMLDivElement>(null);
   const firstFocusableRef = useRef<HTMLAnchorElement>(null);
@@ -64,6 +65,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     const supabase = createSupabaseClient();
     await supabase.auth.signOut();
     logoutStore();
+    router.replace('/');
   };
 
   const handleLinkClick = () => {

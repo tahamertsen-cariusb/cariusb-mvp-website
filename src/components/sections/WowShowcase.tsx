@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { VideoPlayer } from '@/components/ui/VideoPlayer';
 import styles from './WowShowcase.module.css';
 
 const features = [
@@ -180,13 +181,12 @@ export function WowShowcase() {
           <div className={styles.phoneFrame}>
             <div className={styles.phoneNotch}></div>
             <div className={styles.phoneScreen}>
-              <video
-                className={styles.phoneVideo}
+              <VideoPlayer
                 src="https://media-gateway-cariusb.tahamertsen.workers.dev/image/cloudflareupload/final.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
+                fill
+                size="sm"
+                rounded={false}
+                videoClassName={styles.phoneVideo}
               />
             </div>
             <div className={styles.phoneLabel}>

@@ -32,9 +32,30 @@ export default async function DashboardPage() {
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
 
+  const projectIds = (projects || []).map((project) => project.id);
+  const videoProjectIds =
+    projectIds.length > 0
+      ? new Set(
+          (
+            await supabase
+              .from('assets')
+              .select('project_id')
+              .eq('user_id', user.id)
+              .eq('type', 'video')
+              .in('project_id', projectIds)
+              .then(({ data }) => data || [])
+          ).map((row) => (row as any).project_id as string)
+        )
+      : new Set<string>();
+
+  const projectsWithFlags = (projects || []).map((project) => ({
+    ...project,
+    has_video: videoProjectIds.has(project.id),
+  }));
+
   return (
     <DashboardClient
-      initialProjects={projects || []}
+      initialProjects={projectsWithFlags}
       userId={user.id}
       userEmail={user.email || ''}
     />

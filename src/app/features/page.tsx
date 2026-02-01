@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { VideoPlayer } from '@/components/ui/VideoPlayer';
 import styles from './page.module.css';
 
 interface FeatureStep {
@@ -320,14 +321,12 @@ export default function FeaturesPage() {
           <div className={styles.videoShowcase}>
             <div className={styles.videoContainer}>
               <div className={styles.videoPlayer}>
-                <video
-                  className={styles.videoElement}
+                <VideoPlayer
+                  key={activeVideoTab}
                   src={videoShowcaseUrl}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
+                  overlayTitle={currentVideoData.title}
+                  overlaySubtitle={currentVideoData.description}
+                  aspectRatio="16 / 9"
                 />
               </div>
               <div className={styles.videoControls}>

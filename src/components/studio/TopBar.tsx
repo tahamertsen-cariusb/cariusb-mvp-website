@@ -112,6 +112,7 @@ export default function TopBar({
     const supabase = createSupabaseClient();
     await supabase.auth.signOut();
     logoutStore();
+    router.replace('/');
   };
 
   return (

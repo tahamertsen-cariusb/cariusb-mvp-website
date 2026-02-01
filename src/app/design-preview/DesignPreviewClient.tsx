@@ -17,6 +17,7 @@ import {
 } from '@/components/studio';
 import styles from './page.module.css';
 import { createSupabaseClient } from '@/lib/supabase';
+import { VideoPlayer } from '@/components/ui/VideoPlayer';
 
 type DemoFeature = {
   id: string;
@@ -53,6 +54,7 @@ type DesignPreviewClientProps = {
   initialProject?: { id?: string; title?: string; thumbnail_url?: string };
   initialGallery?: Gallery;
   initialAssets?: Asset[];
+  initialMode?: 'photo' | 'video';
 };
 
 const PHOTO_FEATURE_IDS = [
@@ -179,12 +181,14 @@ export default function DesignPreviewClient({
   initialGallery,
   initialUser,
   initialAssets = [],
+  initialMode = 'photo',
 }: DesignPreviewClientProps) {
   const supabase = useMemo(() => createSupabaseClient(), []);
   const projectId = initialProject?.id || null;
   const userId = initialUser?.id || null;
   const assetBaseUrl = 'https://media-gateway-cariusb.tahamertsen.workers.dev';
-  const [mode, setMode] = useState<'photo' | 'video'>('photo');
+  const startInVideo = initialMode === 'video';
+  const [mode, setMode] = useState<'photo' | 'video'>(() => (startInVideo ? 'video' : 'photo'));
   const [resolutionPreset, setResolutionPreset] = useState<'1K' | '2K' | '4K'>('1K');
   const [aspectRatioPreset, setAspectRatioPreset] = useState<
     'auto' | 'instagram_post' | 'instagram_story' | 'marketplace_website'
@@ -221,13 +225,6 @@ export default function DesignPreviewClient({
   const [videoSourceImage, setVideoSourceImage] = useState<string>(() => initialBefore);
   const [videoResultUrl, setVideoResultUrl] = useState<string>('');
   const [videoGenerated, setVideoGenerated] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [videoPlayerState, setVideoPlayerState] = useState<{
-    isPlaying: boolean;
-    isMuted: boolean;
-    currentTime: number;
-    duration: number;
-  }>({ isPlaying: false, isMuted: false, currentTime: 0, duration: 0 });
   const [photoFeatures, setPhotoFeatures] = useState<Record<string, DemoFeature>>(() => clonePhotoFeatures());
   const [videoFeatures, setVideoFeatures] = useState<Record<string, DemoFeature>>(() => cloneVideoFeatures());
   const [creditCost, setCreditCost] = useState(18);
@@ -245,22 +242,6 @@ export default function DesignPreviewClient({
   const imageRetryRef = useRef<Map<string, number>>(new Map());
   const pendingPhotoBeforeRef = useRef<string | null>(null);
   // Source upload is handled via the main center UploadCard only.
-
-  const formatVideoTime = (seconds: number) => {
-    if (!Number.isFinite(seconds) || seconds <= 0) return '0:00';
-    const total = Math.floor(seconds);
-    const mins = Math.floor(total / 60);
-    const secs = total % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el) return;
-    el.pause();
-    el.currentTime = 0;
-    setVideoPlayerState((prev) => ({ ...prev, isPlaying: false, currentTime: 0, duration: 0 }));
-  }, [videoResultUrl]);
 
   const currentFeatures = mode === 'photo' ? photoFeatures : videoFeatures;
   const setCurrentFeatures = mode === 'photo' ? setPhotoFeatures : setVideoFeatures;
@@ -456,6 +437,22 @@ export default function DesignPreviewClient({
     [projectId, supabase, userId]
   );
 
+  const updateProjectType = useCallback(
+    async (nextType: 'photo' | 'video') => {
+      if (!userId || !projectId) return;
+      const { error } = await supabase
+        .from('projects')
+        .update({ type: nextType, updated_at: new Date().toISOString() })
+        .eq('id', projectId)
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Failed to update project type', error);
+      }
+    },
+    [projectId, supabase, userId]
+  );
+
   const syncMainFromSupabase = useCallback(
     async (targetMode: 'photo' | 'video') => {
       const latest = await fetchLatestAssetsWithRetry(targetMode);
@@ -482,6 +479,12 @@ export default function DesignPreviewClient({
     },
     [fetchLatestAssetsWithRetry, updateProjectThumbnail]
   );
+
+  useEffect(() => {
+    if (!startInVideo) return;
+    setVideoSourceImage(initialAfter || initialBefore);
+    void syncMainFromSupabase('video');
+  }, [initialAfter, initialBefore, startInVideo, syncMainFromSupabase]);
 
   const resetToolbarSelections = () => {
     setFeatureTab(null);
@@ -944,6 +947,7 @@ export default function DesignPreviewClient({
       if (normalized.videoRaw) await persistResultAsset(normalized.videoRaw);
       if (normalized.videoUrl) setVideoResultUrl(normalized.videoUrl);
       setMode('video');
+      void updateProjectType('video');
       const latest = await syncMainFromSupabase('video');
       if (!latest?.videoUrl && !normalized.videoUrl) {
         setGenerateOverlay({
@@ -1075,8 +1079,7 @@ export default function DesignPreviewClient({
           isFeatureSelected(id)
         );
 
-  const shouldShowGenerate =
-    !featureTab && (hasGenerateInput || showResultControls);
+  const shouldShowGenerate = !featureTab && hasGenerateInput;
   const shouldShowUpscale =
     mode === 'photo' && upscaleGate === 'unlocked' && Boolean(gallery.after);
   const shouldShowGenerateUi = shouldShowGenerate && !isCollapsed;
@@ -1203,7 +1206,7 @@ export default function DesignPreviewClient({
         />
 
         <BeforeAfterToggle
-          isVisible={showResultControls}
+          isVisible={mode === 'photo' && showResultControls}
           isDisabled={false}
           currentView={currentView}
           onViewChange={handleViewChange}
@@ -1212,153 +1215,7 @@ export default function DesignPreviewClient({
         <div className={styles.imagePreview}>
           {mode === 'video' ? (
             videoResultUrl ? (
-              <div
-                style={{
-                  position: 'relative',
-                  display: 'inline-flex',
-                  flexDirection: 'column',
-                  alignItems: 'stretch',
-                  gap: 10,
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <video
-                  ref={videoRef}
-                  className={styles.sourceVideo}
-                  src={videoResultUrl}
-                  playsInline
-                  preload="metadata"
-                  onLoadedMetadata={(e) => {
-                    const el = e.currentTarget;
-                    setVideoPlayerState((prev) => ({
-                      ...prev,
-                      duration: Number.isFinite(el.duration) ? el.duration : 0,
-                      isMuted: el.muted,
-                    }));
-                  }}
-                  onTimeUpdate={(e) => {
-                    const el = e.currentTarget;
-                    setVideoPlayerState((prev) => ({
-                      ...prev,
-                      currentTime: Number.isFinite(el.currentTime) ? el.currentTime : 0,
-                    }));
-                  }}
-                  onPlay={() => setVideoPlayerState((prev) => ({ ...prev, isPlaying: true }))}
-                  onPause={() => setVideoPlayerState((prev) => ({ ...prev, isPlaying: false }))}
-                  onVolumeChange={(e) => setVideoPlayerState((prev) => ({ ...prev, isMuted: e.currentTarget.muted }))}
-                  onClick={() => {
-                    const el = videoRef.current;
-                    if (!el) return;
-                    if (el.paused) void el.play();
-                    else el.pause();
-                  }}
-                />
-
-                <div
-                  role="group"
-                  aria-label="Video controls"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 10,
-                    width: 'min(90vw, 900px)',
-                    padding: '10px 12px',
-                    borderRadius: 14,
-                    border: '1px solid rgba(255, 69, 0, 0.35)',
-                    background: 'rgba(10, 10, 12, 0.75)',
-                    backdropFilter: 'blur(8px)',
-                  }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const el = videoRef.current;
-                      if (!el) return;
-                      if (el.paused) void el.play();
-                      else el.pause();
-                    }}
-                    aria-label={videoPlayerState.isPlaying ? 'Pause' : 'Play'}
-                    style={{
-                      appearance: 'none',
-                      border: '1px solid rgba(255, 69, 0, 0.35)',
-                      background: 'rgba(255, 255, 255, 0.06)',
-                      color: '#fff',
-                      padding: '8px 10px',
-                      borderRadius: 12,
-                      fontWeight: 600,
-                      fontSize: 13,
-                      cursor: 'pointer',
-                      userSelect: 'none',
-                    }}
-                  >
-                    {videoPlayerState.isPlaying ? 'Pause' : 'Play'}
-                  </button>
-
-                  <div
-                    style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 10,
-                      minWidth: 0,
-                    }}
-                  >
-                    <input
-                      type="range"
-                      min={0}
-                      max={Math.max(0.01, videoPlayerState.duration)}
-                      step={0.1}
-                      value={Math.min(videoPlayerState.currentTime, videoPlayerState.duration || 0)}
-                      onChange={(e) => {
-                        const el = videoRef.current;
-                        if (!el) return;
-                        const next = Number(e.target.value);
-                        el.currentTime = Number.isFinite(next) ? next : 0;
-                        setVideoPlayerState((prev) => ({ ...prev, currentTime: el.currentTime }));
-                      }}
-                      aria-label="Seek"
-                      style={{
-                        width: '100%',
-                        accentColor: '#FF4500',
-                      }}
-                    />
-                    <div
-                      style={{
-                        fontSize: 12,
-                        color: 'rgba(255, 255, 255, 0.75)',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {formatVideoTime(videoPlayerState.currentTime)} / {formatVideoTime(videoPlayerState.duration)}
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const el = videoRef.current;
-                      if (!el) return;
-                      el.muted = !el.muted;
-                      setVideoPlayerState((prev) => ({ ...prev, isMuted: el.muted }));
-                    }}
-                    aria-label={videoPlayerState.isMuted ? 'Unmute' : 'Mute'}
-                    style={{
-                      appearance: 'none',
-                      border: '1px solid rgba(255, 69, 0, 0.35)',
-                      background: 'rgba(255, 255, 255, 0.06)',
-                      color: '#fff',
-                      padding: '8px 10px',
-                      borderRadius: 12,
-                      fontWeight: 600,
-                      fontSize: 13,
-                      cursor: 'pointer',
-                      userSelect: 'none',
-                    }}
-                  >
-                    {videoPlayerState.isMuted ? 'Unmute' : 'Mute'}
-                  </button>
-                </div>
-              </div>
+              <VideoPlayer key={videoResultUrl} src={videoResultUrl} className={styles.sourceVideo} fit="contain" />
             ) : videoPreviewImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img

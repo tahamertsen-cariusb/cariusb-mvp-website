@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import { createSupabaseClient } from '@/lib/supabase';
 import { MobileMenu } from '@/components/ui/MobileMenu';
@@ -11,11 +11,17 @@ import styles from './Navbar.module.css';
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { isLoggedIn, user, logout: logoutStore, setUser } = useAuthStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState<string | null>(user?.avatar ?? null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setAvatarSrc(user?.avatar ?? null);
+  }, [user?.avatar]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +84,7 @@ export function Navbar() {
     const supabase = createSupabaseClient();
     await supabase.auth.signOut();
     logoutStore();
+    router.replace('/');
   };
 
   return (
@@ -133,18 +140,30 @@ export function Navbar() {
             </Link>
             <div className={styles.navAvatar} ref={dropdownRef}>
               <button
+                className={styles.avatarButton}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 aria-label="User menu"
                 aria-expanded={isDropdownOpen}
                 aria-haspopup="true"
-                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
               >
-                <Image
-                  src={user.avatar || '/default-avatar.png'}
-                  alt={`${user.name}'s profile`}
-                  width={40}
-                  height={40}
-                />
+                {avatarSrc ? (
+                  <Image
+                    className={styles.avatarImage}
+                    src={avatarSrc}
+                    alt={`${user.name}'s profile`}
+                    width={40}
+                    height={40}
+                    onError={() => setAvatarSrc(null)}
+                  />
+                ) : (
+                  <span className={styles.avatarFallback} aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M19 17H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h1l2-3h8l2 3h1a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2Z" />
+                      <circle cx="7.5" cy="14" r="1.5" />
+                      <circle cx="16.5" cy="14" r="1.5" />
+                    </svg>
+                  </span>
+                )}
               </button>
               
               <div 

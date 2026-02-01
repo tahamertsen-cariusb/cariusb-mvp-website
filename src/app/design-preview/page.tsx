@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export default async function DesignPreviewPage({
   searchParams,
 }: {
-  searchParams: { project?: string };
+  searchParams: { project?: string; mode?: string };
 }) {
   const supabase = createSupabaseServerClient();
 
@@ -59,6 +59,12 @@ export default async function DesignPreviewPage({
         .then(({ data }) => data || [])
     : [];
 
+  const hasVideoAsset = initialAssets.some((asset) => asset.type === 'video');
+  const initialMode =
+    searchParams?.mode === 'video' || (initialProject as any)?.type === 'video' || hasVideoAsset
+      ? 'video'
+      : 'photo';
+
   return (
     <DesignPreviewClient
       initialUser={{
@@ -69,6 +75,7 @@ export default async function DesignPreviewPage({
       initialCredits={initialCredits}
       initialProject={initialProject ?? undefined}
       initialAssets={initialAssets}
+      initialMode={initialMode}
     />
   );
 }
